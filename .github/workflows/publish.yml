@@ -1,11 +1,16 @@
 on: [push]
 
-env:
-  VERSION: "1.0.${{ github.run_number }}"
-
 jobs:
   publish:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        npm-version: ["6.14.12", "7.19.1"]
+
+    env:
+      VERSION: ${{ matrix.npm-version }}
 
     steps:
       - uses: actions/checkout@v2
@@ -28,12 +33,6 @@ jobs:
         run: npm pack
 
       - name: Publish the package
-        run: npm publish
+        run: npx npm@${{ matrix.npm-version }} publish
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
-
-      - name: Trigger npm-install workflow
-        if: ${{ env.GITHUB_TOKEN != null }}
-        run: gh api repos/${{ github.repository_owner }}/npm-install/dispatches <<< '{"event_type":"build"}' --input -
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
