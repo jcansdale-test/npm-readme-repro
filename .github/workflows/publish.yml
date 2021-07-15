@@ -7,7 +7,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        npm-pack-version: ["7.0.8"]
         npm-version: ["7.0.7", "7.0.8"]
 
     env:
@@ -29,9 +28,7 @@ jobs:
         run: npm version ${{ env.VERSION }} --no-git-tag-version
 
       - name: Build the package
-        run: npx npm@${{ matrix.npm-pack-version }} pack
-
-      - run: ls
+        run: npm pack
 
       - name: Publish the package
         run: npx npm@${{ matrix.npm-version }} publish *.tgz
