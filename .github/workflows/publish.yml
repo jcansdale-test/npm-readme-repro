@@ -22,7 +22,7 @@ jobs:
         run: npm init --scope ${{ github.repository_owner }} -y
 
       - name: Add a README.md file
-        run: echo 'I am a README!' > README.md
+        run: echo "I am a README for v${{ env.VERSION }}!" > README.md
 
       - name: Set package version to ${{ env.VERSION }}
         run: npm version ${{ env.VERSION }} --no-git-tag-version
