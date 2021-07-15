@@ -13,8 +13,6 @@ jobs:
       VERSION: ${{ matrix.npm-version }}-${{ github.run_number }}
 
     steps:
-      - uses: actions/checkout@v2
-
       - uses: actions/setup-node@v1
         with:
           scope: ${{ github.repository_owner }}
@@ -23,8 +21,8 @@ jobs:
       - name: Create a package called @${{ github.repository }}
         run: npm init --scope ${{ github.repository_owner }} -y
 
-      - name: Add index.js to package
-        run: echo 'exports.sayHello = () => { console.log("Hello from ${{ github.repository }}!") }' > index.js
+      - name: Add a README.md file
+        run: echo 'I am a README!' > README.md
 
       - name: Set package version to ${{ env.VERSION }}
         run: npm version ${{ env.VERSION }} --no-git-tag-version
