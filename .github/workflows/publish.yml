@@ -32,6 +32,6 @@ jobs:
         run: npx npm@${{ matrix.npm-pack-version }} pack
 
       - name: Publish the package
-        run: npx npm@${{ matrix.npm-version }} publish
+        run: npx npm@${{ matrix.npm-version }} publish *.tgz
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
